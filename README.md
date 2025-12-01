@@ -60,3 +60,44 @@ prototipo_sistema/
 ├── seed_ilo.py
 ├── requirements.txt
 └── .gitignore
+
+## 🚀 Cómo ejecutar el proyecto
+
+### 1. Crear y activar entorno virtual
+
+```bash
+python -m venv venv
+source venv/bin/activate        # Linux / MacOS
+# .\venv\Scripts\activate        # Windows PowerShell
+```
+
+### 2. Instalar dependencias
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Crear la base de datos
+
+```bash
+python crea_db.py
+```
+
+### 4. Poblar datos de ejemplo
+
+```bash
+python seed_db.py
+python seed_ilo.py
+```
+
+### 5. Ejecutar la aplicación
+
+```bash
+python run.py
+```
+
+Luego abrir en el navegador:
+
+```text
+http://127.0.0.1:5000
+```
