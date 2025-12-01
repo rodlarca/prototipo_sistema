@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Editar turno{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Editar turno</h1>
+
+<form method="POST" action="{{ url_for('main.editar_turno', id=turno.id) }}">
+    <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha</label>
+        <input type="date" class="form-control" id="fecha" name="fecha"
+               value="{{ turno.fecha }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="ingeniero" class="form-label">Ingeniero</label>
+        <input type="text" class="form-control" id="ingeniero" name="ingeniero"
+               value="{{ turno.ingeniero }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="plataforma" class="form-label">Plataforma</label>
+        <input type="text" class="form-control" id="plataforma" name="plataforma"
+               value="{{ turno.plataforma }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="horario" class="form-label">Horario</label>
+        <input type="text" class="form-control" id="horario" name="horario"
+               value="{{ turno.horario }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="rol" class="form-label">Rol</label>
+        <input type="text" class="form-control" id="rol" name="rol"
+               value="{{ turno.rol }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="observaciones" class="form-label">Observaciones</label>
+        <textarea class="form-control" id="observaciones" name="observaciones" rows="3">{{ turno.observaciones }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    <a href="{{ url_for('main.turnos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

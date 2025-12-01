@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Mantenciones{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Mantenciones</h1>
+    <a href="{{ url_for('main.nueva_mantencion') }}" class="btn btn-primary">
+        Nueva mantención
+    </a>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Ingeniero</th>
+            <th>Horario</th>
+            <th>Área</th>
+            <th>Responsable</th>
+            <th>Estado</th>
+            <th>Comentario</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for m in mantenciones %}
+        <tr>
+            <td>{{ m.fecha }}</td>
+            <td>{{ m.ingeniero }}</td>
+            <td>{{ m.horario }}</td>
+            <td>{{ m.area }}</td>
+            <td>{{ m.responsable }}</td>
+            <td>{{ m.estado }}</td>
+            <td>{{ m.comentario }}</td>
+            <td class="text-center">
+                <a href="{{ url_for('main.editar_mantencion', id=m.id) }}" class="btn btn-sm btn-warning">
+                    Editar
+                </a>
+                <form method="POST"
+                      action="{{ url_for('main.eliminar_mantencion', id=m.id) }}"
+                      style="display:inline-block"
+                      onsubmit="return confirm('¿Seguro que deseas eliminar esta mantención?');">
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

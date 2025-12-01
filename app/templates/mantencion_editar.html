@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Editar mantención{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Editar mantención</h1>
+
+<form method="POST" action="{{ url_for('main.editar_mantencion', id=mantencion.id) }}">
+    <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha</label>
+        <input type="date" class="form-control" id="fecha" name="fecha"
+               value="{{ mantencion.fecha }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="ingeniero" class="form-label">Ingeniero</label>
+        <input type="text" class="form-control" id="ingeniero" name="ingeniero"
+               value="{{ mantencion.ingeniero }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="horario" class="form-label">Horario</label>
+        <input type="text" class="form-control" id="horario" name="horario"
+               value="{{ mantencion.horario }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="area" class="form-label">Área</label>
+        <input type="text" class="form-control" id="area" name="area"
+               value="{{ mantencion.area }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="responsable" class="form-label">Responsable</label>
+        <input type="text" class="form-control" id="responsable" name="responsable"
+               value="{{ mantencion.responsable }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="estado" class="form-label">Estado</label>
+        <select class="form-select" id="estado" name="estado" required>
+            <option value="Pendiente"   {% if mantencion.estado == "Pendiente" %}selected{% endif %}>Pendiente</option>
+            <option value="En progreso" {% if mantencion.estado == "En progreso" %}selected{% endif %}>En progreso</option>
+            <option value="Completada"  {% if mantencion.estado == "Completada" %}selected{% endif %}>Completada</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="comentario" class="form-label">Comentario</label>
+        <textarea class="form-control" id="comentario" name="comentario" rows="3">{{ mantencion.comentario }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar cambios</button>
+    <a href="{{ url_for('main.mantenciones') }}" class="btn btn-secondary">Cancelar</a>
+{% endblock %}

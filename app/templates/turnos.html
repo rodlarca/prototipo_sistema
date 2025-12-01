@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Turnos{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Turnos</h1>
+    <a href="{{ url_for('main.nuevo_turno') }}" class="btn btn-primary">
+        Nuevo turno
+    </a>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Fecha</th>
+            <th>Ingeniero</th>
+            <th>Plataforma</th>
+            <th>Horario</th>
+            <th>Rol</th>
+            <th>Observaciones</th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for t in turnos %}
+        <tr>
+            <td>{{ t.fecha }}</td>
+            <td>{{ t.ingeniero }}</td>
+            <td>{{ t.plataforma }}</td>
+            <td>{{ t.horario }}</td>
+            <td>{{ t.rol }}</td>
+            <td>{{ t.observaciones }}</td>
+            <td class="text-center">
+                <a href="{{ url_for('main.editar_turno', id=t.id) }}" class="btn btn-sm btn-warning">
+                    Editar
+                </a>
+                <form method="POST"
+                      action="{{ url_for('main.eliminar_turno', id=t.id) }}"
+                      style="display:inline-block"
+                      onsubmit="return confirm('¿Seguro que deseas eliminar este turno?');">
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        Eliminar
+                    </button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

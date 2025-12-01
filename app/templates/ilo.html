@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+{% block title %}Monitoreo ILO{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Monitoreo ILO</h1>
+<p class="text-muted">
+    Gráficos basados en datos simulados de servidores ILO para el monitoreo de CPU, ancho de banda, errores y estados.
+    Servidor monitorizado en serie temporal: <strong>{{ servidor_actual }}</strong>
+</p>
+
+<div class="row">
+    <!-- 1) Línea CPU / BW -->
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header">
+                CPU y Ancho de banda en el tiempo ({{ servidor_actual }})
+            </div>
+            <div class="card-body">
+                <canvas id="chartLinea"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2) Barras errores por servidor -->
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Errores totales por servidor
+            </div>
+            <div class="card-body">
+                <canvas id="chartBarrasErrores"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- 3) Barras CPU promedio por servidor -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                CPU promedio por servidor
+            </div>
+            <div class="card-body">
+                <canvas id="chartCpuPromedio"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4) Doughnut estados -->
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Distribución de estados (OK / WARNING / CRITICAL)
+            </div>
+            <div class="card-body">
+                <canvas id="chartEstados"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- 5) Línea errores en el tiempo -->
+    <div class="col-md-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Errores en el tiempo ({{ servidor_actual }})
+            </div>
+            <div class="card-body">
+                <canvas id="chartErroresTiempo"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Datos serializados desde Flask
+    const labels = {{ labels|tojson }};
+    const cpuData = {{ cpu|tojson }};
+    const bwData = {{ bw|tojson }};
+    const erroresData = {{ errores|tojson }};
+    const memoriaData = {{ memoria|tojson }};
+
+    const servidoresErrores = {{ servidores|tojson }};
+    const erroresTotales = {{ errores_totales|tojson }};
+
+    const servidoresCpu = {{ servidores_cpu|tojson }};
+    const cpuPromedios = {{ cpu_promedios|tojson }};
+
+    const estadosLabels = {{ estados_labels|tojson }};
+    const estadosCounts = {{ estados_counts|tojson }};
+
+    // 1) Gráfico de líneas: CPU y BW
+    const ctxLinea = document.getElementById('chartLinea').getContext('2d');
+    new Chart(ctxLinea, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'CPU (%)',
+                    data: cpuData,
+                    yAxisID: 'y',
+                    tension: 0.3
+                },
+                {
+                    label: 'Ancho de banda (Mbps)',
+                    data: bwData,
+                    yAxisID: 'y1',
+                    borderDash: [5, 5],
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            stacked: false,
+            plugins: {
+                legend: { position: 'top' },
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    position: 'left',
+                    title: { display: true, text: 'CPU (%)' }
+                },
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    title: { display: true, text: 'Ancho de banda (Mbps)' },
+                    grid: { drawOnChartArea: false }
+                }
+            }
+        }
+    });
+
+    // 2) Barras horizontales: errores por servidor
+    const ctxBarrasErrores = document.getElementById('chartBarrasErrores').getContext('2d');
+    new Chart(ctxBarrasErrores, {
+        type: 'bar',
+        data: {
+            labels: servidoresErrores,
+            datasets: [{
+                label: 'Errores totales',
+                data: erroresTotales
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Cantidad de errores' } },
+                y: { title: { display: true, text: 'Servidor' } }
+            }
+        }
+    });
+
+    // 3) Barras verticales: CPU promedio por servidor
+    const ctxCpuProm = document.getElementById('chartCpuPromedio').getContext('2d');
+    new Chart(ctxCpuProm, {
+        type: 'bar',
+        data: {
+            labels: servidoresCpu,
+            datasets: [{
+                label: 'CPU promedio (%)',
+                data: cpuPromedios
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'CPU promedio (%)' }
+                },
+                x: {
+                    title: { display: true, text: 'Servidor' }
+                }
+            }
+        }
+    });
+
+    // 4) Doughnut: distribución de estados
+    const ctxEstados = document.getElementById('chartEstados').getContext('2d');
+    new Chart(ctxEstados, {
+        type: 'doughnut',
+        data: {
+            labels: estadosLabels,
+            datasets: [{
+                data: estadosCounts
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // 5) Línea: errores en el tiempo
+    const ctxErroresTiempo = document.getElementById('chartErroresTiempo').getContext('2d');
+    new Chart(ctxErroresTiempo, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Errores',
+                    data: erroresData,
+                    tension: 0.3
+                },
+                {
+                    label: 'Memoria (%)',
+                    data: memoriaData,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: { display: true, text: 'Errores / Memoria (%)' }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
