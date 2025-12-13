@@ -12,8 +12,12 @@ def create_app():
 
     db.init_app(app)
 
-    # 👇 ESTA LÍNEA ES CLAVE
+    # Importa modelos para que SQLAlchemy conozca las tablas
     from . import models
+
+    # ✅ Crear tablas si no existen
+    with app.app_context():
+        db.create_all()
 
     from .routes import main
     app.register_blueprint(main)
