@@ -2,40 +2,54 @@
 {% block title %}Nuevo turno{% endblock %}
 
 {% block content %}
-<h1 class="mb-4">Nuevo turno</h1>
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-3">
+  <div>
+    <h1 class="h3 mb-1">Nuevo turno</h1>
+    <div class="text-muted small">Completa los datos para registrar un turno</div>
+  </div>
+  <a href="{{ url_for('main.turnos') }}" class="btn btn-outline-secondary">Volver</a>
+</div>
 
-<form method="POST" action="{{ url_for('main.nuevo_turno') }}">
-    <div class="mb-3">
-        <label for="fecha" class="form-label">Fecha</label>
-        <input type="date" class="form-control" id="fecha" name="fecha" required>
-    </div>
+<div class="card shadow-sm">
+  <div class="card-body">
+    <form method="POST" action="{{ url_for('main.nuevo_turno') }}">
+      <div class="row g-3">
+        <div class="col-12 col-md-4">
+          <label for="fecha" class="form-label">Fecha</label>
+          <input type="date" class="form-control" id="fecha" name="fecha" required>
+        </div>
 
-    <div class="mb-3">
-        <label for="ingeniero" class="form-label">Ingeniero</label>
-        <input type="text" class="form-control" id="ingeniero" name="ingeniero" required>
-    </div>
+        <div class="col-12 col-md-4">
+          <label for="ingeniero" class="form-label">Ingeniero</label>
+          <input type="text" class="form-control" id="ingeniero" name="ingeniero" required>
+        </div>
 
-    <div class="mb-3">
-        <label for="plataforma" class="form-label">Plataforma</label>
-        <input type="text" class="form-control" id="plataforma" name="plataforma" placeholder="IPTV, Broadcast, Core TV..." required>
-    </div>
+        <div class="col-12 col-md-4">
+          <label for="horario" class="form-label">Horario</label>
+          <input type="text" class="form-control" id="horario" name="horario" placeholder="08:00 - 20:00" required>
+        </div>
 
-    <div class="mb-3">
-        <label for="horario" class="form-label">Horario</label>
-        <input type="text" class="form-control" id="horario" name="horario" placeholder="08:00 - 20:00" required>
-    </div>
+        <div class="col-12 col-md-6">
+          <label for="plataforma" class="form-label">Plataforma</label>
+          <input type="text" class="form-control" id="plataforma" name="plataforma" placeholder="IPTV, Broadcast, Core TV..." required>
+        </div>
 
-    <div class="mb-3">
-        <label for="rol" class="form-label">Rol</label>
-        <input type="text" class="form-control" id="rol" name="rol" placeholder="Operador NOC, Supervisor TV..." required>
-    </div>
+        <div class="col-12 col-md-6">
+          <label for="rol" class="form-label">Rol</label>
+          <input type="text" class="form-control" id="rol" name="rol" placeholder="Operador NOC, Supervisor TV..." required>
+        </div>
 
-    <div class="mb-3">
-        <label for="observaciones" class="form-label">Observaciones</label>
-        <textarea class="form-control" id="observaciones" name="observaciones" rows="3"></textarea>
-    </div>
+        <div class="col-12">
+          <label for="observaciones" class="form-label">Observaciones</label>
+          <textarea class="form-control" id="observaciones" name="observaciones" rows="3"></textarea>
+        </div>
+      </div>
 
-    <button type="submit" class="btn btn-success">Guardar</button>
-    <a href="{{ url_for('main.turnos') }}" class="btn btn-secondary">Cancelar</a>
-</form>
+      <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ url_for('main.turnos') }}" class="btn btn-outline-secondary">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock %}

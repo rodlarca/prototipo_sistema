@@ -1,6 +1,240 @@
 {% extends "base.html" %}
 {% block title %}Inicio{% endblock %}
+
 {% block content %}
-<h1 class="text-center">Prototipo del Sistema</h1>
-<p class="text-center">Bienvenido al prototipo funcional.</p>
+
+<!-- HERO -->
+<section class="py-4 py-lg-5">
+  <div class="row align-items-center g-4">
+    <div class="col-12 col-lg-7">
+      <span class="badge text-bg-primary mb-2">Soporte TV • Prototipo</span>
+      <h1 class="display-6 fw-semibold mb-3">
+        Menos fricción para el soporte diario.
+        <span class="text-muted">Más orden, más trazabilidad.</span>
+      </h1>
+
+      <p class="lead text-muted mb-4">
+        Esta web centraliza el trabajo del equipo de Soporte TV en tres frentes:
+        planificación de turnos, gestión de mantenciones y chequeo de salud ILO.
+        El objetivo es reducir errores operacionales y acelerar la toma de decisiones
+        con información clara y accesible.
+      </p>
+
+      <div class="d-flex flex-column flex-sm-row gap-2">
+        <a href="{{ url_for('main.turnos') }}" class="btn btn-primary btn-lg">
+          Empezar ahora
+        </a>
+        <a href="#como-funciona" class="btn btn-outline-secondary btn-lg">
+          Ver cómo funciona
+        </a>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 mt-4">
+        <span class="badge text-bg-light border">✅ Responsive</span>
+        <span class="badge text-bg-light border">✅ CRUD</span>
+        <span class="badge text-bg-light border">✅ Visualización ILO</span>
+        <span class="badge text-bg-light border">✅ Enfoque operativo</span>
+      </div>
+    </div>
+
+    <!-- “Panel” visual con Bootstrap -->
+    <div class="col-12 col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <div class="fw-semibold">Resumen operativo</div>
+              <div class="text-muted small">Visión rápida del sistema</div>
+            </div>
+            <span class="badge text-bg-dark">Live</span>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="p-3 rounded border bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold">Turnos</div>
+                    <div class="text-muted small">Planifica roles, horarios y plataformas</div>
+                  </div>
+                  <span class="badge text-bg-primary">Módulo</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 rounded border bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold">Mantenciones</div>
+                    <div class="text-muted small">Registra estado, responsables y comentarios</div>
+                  </div>
+                  <span class="badge text-bg-primary">Módulo</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="p-3 rounded border bg-light">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="fw-semibold">ILO</div>
+                    <div class="text-muted small">Indicadores, errores y salud del servidor</div>
+                  </div>
+                  <span class="badge text-bg-dark">Dashboard</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-muted small">
+              “Diseñado para uso diario del equipo”
+            </div>
+            <a href="{{ url_for('main.ilo') }}" class="btn btn-sm btn-outline-dark">
+              Ver ILO
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFICIOS -->
+<section id="como-funciona" class="py-4 py-lg-5">
+  <div class="row g-3 align-items-end mb-3">
+    <div class="col-12 col-lg-7">
+      <h2 class="h4 fw-semibold mb-1">¿Qué problema resuelve?</h2>
+      <p class="text-muted mb-0">
+        Unifica información operativa que normalmente está dispersa (planillas, chats, notas)
+        y la convierte en flujos simples, trazables y fáciles de consultar.
+      </p>
+    </div>
+    <div class="col-12 col-lg-5 text-lg-end">
+      <a href="{{ url_for('main.mantenciones') }}" class="btn btn-outline-primary">
+        Ir a Mantenciones
+      </a>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-6 col-xl-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="fw-semibold">Orden operacional</div>
+            <span class="badge text-bg-light border">01</span>
+          </div>
+          <p class="text-muted mb-0">
+            Mantiene turnos y mantenciones en un solo lugar para disminuir
+            omisiones y mejorar el traspaso de turno.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="fw-semibold">Trazabilidad</div>
+            <span class="badge text-bg-light border">02</span>
+          </div>
+          <p class="text-muted mb-0">
+            Cada registro queda documentado con fecha, responsables, estado
+            y observaciones para auditoría y seguimiento.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="fw-semibold">Visibilidad técnica</div>
+            <span class="badge text-bg-light border">03</span>
+          </div>
+          <p class="text-muted mb-0">
+            El módulo ILO entrega una lectura rápida del estado del servidor
+            (CPU, BW, errores y estados) para reaccionar antes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- “CÓMO SE USA” -->
+<section class="py-4 py-lg-5">
+  <div class="card shadow-sm">
+    <div class="card-body p-4 p-lg-5">
+      <div class="row g-4 align-items-center">
+        <div class="col-12 col-lg-7">
+          <h2 class="h4 fw-semibold mb-2">Flujo de uso diario</h2>
+          <p class="text-muted mb-4">
+            Un recorrido simple pensado para el día a día del soporte:
+            planificar, ejecutar y verificar.
+          </p>
+
+          <div class="list-group">
+            <div class="list-group-item d-flex gap-3 py-3">
+              <span class="badge text-bg-primary align-self-start">1</span>
+              <div>
+                <div class="fw-semibold">Planifica turnos</div>
+                <div class="text-muted small">
+                  Define ingeniero, horario, plataforma y rol para cubrir la operación.
+                </div>
+              </div>
+            </div>
+
+            <div class="list-group-item d-flex gap-3 py-3">
+              <span class="badge text-bg-primary align-self-start">2</span>
+              <div>
+                <div class="fw-semibold">Registra mantenciones</div>
+                <div class="text-muted small">
+                  Documenta responsables, estado y comentarios para seguimiento.
+                </div>
+              </div>
+            </div>
+
+            <div class="list-group-item d-flex gap-3 py-3">
+              <span class="badge text-bg-dark align-self-start">3</span>
+              <div>
+                <div class="fw-semibold">Monitorea ILO</div>
+                <div class="text-muted small">
+                  Revisa indicadores y estados para detectar degradación temprano.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-5">
+          <div class="p-4 rounded border bg-light">
+            <div class="fw-semibold mb-2">Acceso rápido</div>
+            <div class="d-grid gap-2">
+              <a href="{{ url_for('main.turnos') }}" class="btn btn-primary">
+                Abrir Turnos
+              </a>
+              <a href="{{ url_for('main.mantenciones') }}" class="btn btn-outline-primary">
+                Abrir Mantenciones
+              </a>
+              <a href="{{ url_for('main.ilo') }}" class="btn btn-outline-dark">
+                Abrir ILO
+              </a>
+            </div>
+            <div class="text-muted small mt-3">
+              Tip: puedes entrar directo desde el menú superior cuando estés en operación.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% endblock %}
